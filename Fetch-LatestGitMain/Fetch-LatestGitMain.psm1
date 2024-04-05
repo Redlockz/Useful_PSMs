@@ -1,4 +1,4 @@
-﻿function Fetch-LatestGitMain {
+function Fetch-LatestGitMain {
 
         <#
     .SYNOPSIS
@@ -61,20 +61,21 @@
                 } else {
 
                     $status = git status
-                    # Write-Host $status
-                    Write-Host "Fetching remote main for" $location\$dir
-                    $CurrentGitBranch = git branch --show-current
+                    Write-Verbose $status
 
+                    $CurrentGitBranch = git branch --show-current
+                    $GitMainBranch = $(git branch | Where-Object {$_.EndsWith("main") -or $_.EndsWith("master")}).split("* ")
+                    Write-Host "Fetching remote" $GitMainBranch[1] "for" $location\$dir
                     # False sense of security, local branch only tracks local remote commit
                     if ($status -contains "nothing to commit, working tree clean") {
 
-                        git checkout main -q
+                        git checkout $GitMainBranch[1] -q
                         git pull -q
-                        if (!($currentGitBranch -eq "main")){
+                        if (!($currentGitBranch -eq $GitMainBranch[1])){
                             git checkout $currentGitBranch
-                            Write-Host "pulled newest main from" $dir ", going back to" $currentGitBranch
+                            Write-Host "pulled newest" $GitMainBranch[1] "from" $dir ", going back to" $currentGitBranch
                         }
-                        Write-Host "pulled newest main from" $dir
+                        Write-Host "pulled newest" $GitMainBranch[1] "from" $dir
                         Set-Location ..
 
                     # Changes have been made on new branch, but not committed
@@ -88,13 +89,13 @@
 
                             git add .
                             git commit -m "automated git stash"
-                            git checkout main -q
+                            git checkout $GitMainBranch[1] -q
                             git pull -q
-                            if (!($currentGitBranch -eq "main")){
+                            if (!($currentGitBranch -eq $GitMainBranch[1])){
                                 git checkout $currentGitBranch
-                                Write-Host "pulled newest main from" $dir ", going back to" $currentGitBranch
+                                Write-Host "pulled newest" $GitMainBranch[1] "from" $dir ", going back to" $currentGitBranch
                             }
-                            Write-Host "pulled newest main from" $dir
+                            Write-Host "pulled newest" $GitMainBranch[1] "from" $dir
                             Set-Location ..
 
                         # Abort commiting edits
@@ -113,14 +114,14 @@
                     # Pull main from all folders containing hidden .git file
                     } elseif (Get-ChildItem -Path $dir -Directory -Hidden -Filter .git) {
 
-                        git checkout main -q
+                        git checkout $GitMainBranch[1] -q
                         git pull -q
-                        if (!($currentGitBranch -eq "main")){
+                        if (!($currentGitBranch -eq $GitMainBranch[1])){
                             git checkout $currentGitBranch
-                            Write-Host "pulled newest main from" $dir ", going back to" $currentGitBranch
+                            Write-Host "pulled newest" $GitMainBranch[1] "from" $dir ", going back to" $currentGitBranch
                         }
 
-                        Write-Host "pulled newest main from" $dir
+                        Write-Host "pulled newest" $GitMainBranch[1] "from" $dir
                         Set-Location ..
 
                     }
@@ -135,7 +136,7 @@
         }
     } else {
 
-        Write-Host "Location not found, are you sure you entered the right directory?"
+        Write-Host "location not found, are you sure you entered the right directory?"
         exit 1
 
     }
