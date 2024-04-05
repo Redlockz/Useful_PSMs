@@ -3,17 +3,16 @@ function Fetch-LatestGitMain {
         <#
     .SYNOPSIS
         Updates all .git repositories at a given path by pulling the latest changes
-        from the main branch.
+        from the main/master/master branch.
 
     .DESCRIPTION
         Fetch-LatestGitMain searches all directories at the given path (the first time
         the command is executed, it will save a config file called .ado_gitfolder.txt which contains the
-        path to the folder containing your git repositories) if the directory
-        contains a git repository (.git folder). If a .git folder is present in
-        the directory, this command will commit any git changes, switch to the main branch,
+        path to the folder containing your git repositories). If a .git folder is present in
+        the directory, this command will commit any git changes, switch to the main/master branch,
         pull the latest changes from git, and revert back to the
         original git branch the repository was in before moving on to the next
-        repository, unless it was already on main.
+        repository, unless it was already on main/master.
 
     .EXAMPLE
         Fetch-LatestGitMain
@@ -64,7 +63,7 @@ function Fetch-LatestGitMain {
                     Write-Verbose $status
 
                     $CurrentGitBranch = git branch --show-current
-                    $GitMainBranch = $(git branch | Where-Object {$_.EndsWith("main") -or $_.EndsWith("master")}).split("* ")
+                    $GitMainBranch = $(git branch | Where-Object {$_.EndsWith("main/master") -or $_.EndsWith("master")}).split("* ")
                     Write-Host "Fetching remote" $GitMainBranch[1] "for" $location\$dir
                     # False sense of security, local branch only tracks local remote commit
                     if ($status -contains "nothing to commit, working tree clean") {
@@ -111,7 +110,7 @@ function Fetch-LatestGitMain {
 
                         Set-Location ..
 
-                    # Pull main from all folders containing hidden .git file
+                    # Pull main/master from all folders containing hidden .git file
                     } elseif (Get-ChildItem -Path $dir -Directory -Hidden -Filter .git) {
 
                         git checkout $GitMainBranch[1] -q
