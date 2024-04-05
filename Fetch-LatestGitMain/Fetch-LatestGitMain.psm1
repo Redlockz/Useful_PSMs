@@ -135,7 +135,7 @@ function Fetch-LatestGitMain {
         }
     } else {
 
-        Write-Host "location not found, are you sure you entered the right directory?"
+        throw "location not found, are you sure you entered the right directory?"
         exit 1
 
     }
