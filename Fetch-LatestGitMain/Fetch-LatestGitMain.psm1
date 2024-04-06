@@ -3,7 +3,7 @@ function Fetch-LatestGitMain {
         <#
     .SYNOPSIS
         Updates all .git repositories at a given path by pulling the latest changes
-        from the main/master/master branch.
+        from the main/master branch.
 
     .DESCRIPTION
         Fetch-LatestGitMain searches all directories at the given path (the first time
@@ -60,7 +60,7 @@ function Fetch-LatestGitMain {
                 } else {
 
                     $status = git status
-                    Write-Verbose $status
+                    Write-Host $status
 
                     $CurrentGitBranch = git branch --show-current
                     $GitMainBranch = $(git branch | Where-Object {$_.EndsWith("main/master") -or $_.EndsWith("master")}).split("* ")
