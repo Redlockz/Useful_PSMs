@@ -21,17 +21,18 @@ function Update-Repositories {
         None
 
     #>
-    $current_folder = "~\"
+    $home_folder = "~\"
 
-    if (Test-Path $current_folder\.ado_gitfolder.txt) {
+    # Check if config is present
+    if (Test-Path $home_folder\.ado_gitfolder.txt) {
 
-        $location = Get-Content "$current_folder\.ado_gitfolder.txt"
+        $location = Get-Content "$home_folder\.ado_gitfolder.txt"
 
     } else {
 
         [string]$location = Read-Host "Enter the path to your base git directory containing your git repositories, example C:\Users\User1\Projects"
-        New-Item "$current_folder\.ado_gitfolder.txt"
-        Set-Content "$current_folder\.ado_gitfolder.txt" "$location"
+        New-Item "$home_folder\.ado_gitfolder.txt"
+        Set-Content "$home_folder\.ado_gitfolder.txt" "$location"
 
     }
 
@@ -86,8 +87,15 @@ function Update-Repositories {
                         # commit edits to temp commit
                         if ($stash_status -eq "Y") {
 
-                            git add .
-                            git commit -m "automated git stash"
+                            if ($CurrentGitBranch -ne $GitMainBranch) {
+                                git add .
+                                git commit -m "automated git commit"
+                            } elseif ($CurrentGitBranch -eq $GitMainBranch) {
+                                Write-Host "Not committing to $GitMainBranch, making temporary branch for commit"
+                                git checkout -b automated/branch
+                                git add .
+                                git commit -m "automated branch creation + git commit"
+                            }
                             git checkout $GitMainBranch[1] -q
                             git pull -q
                             if (!($currentGitBranch -eq $GitMainBranch[1])){
