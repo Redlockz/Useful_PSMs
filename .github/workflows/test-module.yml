@@ -28,6 +28,6 @@ jobs:
       - name: Test-PSModule
         uses: PSModule/Test-PSModule@main
         with:
-          Path: Update-Repositories
+          Path: Update-Repositories/Update-Repositories.psm1
           TestType: SourceCode
           
