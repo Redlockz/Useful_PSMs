@@ -3,6 +3,7 @@
     IncludeDefaultRules=$true
 	ExcludeRules = @(
         'PSAvoidUsingWriteHost',
-        'PSAvoidUsingPositionalParameters'
+        'PSAvoidUsingPositionalParameters',
+        'PSUseSingularNouns'
     )
 }
