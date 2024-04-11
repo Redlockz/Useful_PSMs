@@ -2,6 +2,7 @@
     CustomRulePath='CustomPSScriptAnalyzerRules.psm1'
     IncludeDefaultRules=$true
 	ExcludeRules = @(
-        'PSAvoidUsingWriteHost'
+        'PSAvoidUsingWriteHost',
+        'PSAvoidUsingPositionalParameters'
     )
 }
