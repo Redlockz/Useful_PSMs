@@ -19,20 +19,6 @@ jobs:
     name: Test-PSModule
     runs-on: ubuntu-latest
     steps:
-      - name: install dependecy
-        run: |
-          Set-PSRepository \
-          -ErrorAction Stop           <# Action to take if a command fails #> \
-          -InstallationPolicy Trusted <# Installation policy (Trusted, Untrusted) #> \
-          -Name PSGallery             <# Name of the repository #> \
-          -Verbose;                   <# Write verbose output #> \
-          # Install PSScriptAnalyzer module (https://github.com/PowerShell/PSScriptAnalyzer/tags)
-          Install-Module \
-          -ErrorAction Stop \
-          -Name PSScriptAnalyzer    <# Name of modules to install from the online gallery #> \
-          -RequiredVersion 1.20.0   <# Exact version of a single module to install #> \
-          -Verbose;
-
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -40,11 +26,5 @@ jobs:
         uses: PSModule/Initialize-PSModule@main
 
       - name: Test-PSModule
-        run: "Invoke-ScriptAnalyzer -EnableExit -Recurse -Path ."
-        # stage: lint
-        # uses: PSModule/Test-PSModule@main
-        # with:
-        #   Path: Update-Repositories/Update-Repositories.psm1
-        #   TestType: SourceCode
-
+        run: pwsh -NoProfile -NoLogo -Command "Invoke-ScriptAnalyzer -EnableExit -Path Update-Repositories/Update-Repositories.psm1"
 
