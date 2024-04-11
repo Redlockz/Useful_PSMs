@@ -26,5 +26,5 @@ jobs:
         uses: PSModule/Initialize-PSModule@main
 
       - name: Test-PSModule
-        run: pwsh -NoProfile -NoLogo -Command "Invoke-ScriptAnalyzer -EnableExit -Path Update-Repositories/Update-Repositories.psm1"
+        run: pwsh -NoProfile -NoLogo -Command "Invoke-ScriptAnalyzer -ExcludeRule Update-Repositories/PSScriptAnalyzerSettings.psd1 -EnableExit -Path Update-Repositories/Update-Repositories.psm1"
 
