@@ -64,18 +64,18 @@ function Update-Repositories {
                     Write-Host $status
 
                     $CurrentGitBranch = git branch --show-current
-                    $GitMainBranch = $(git branch | Where-Object {$_.EndsWith("main/master") -or $_.EndsWith("master")}).split("* ")
-                    Write-Host "Fetching remote" $GitMainBranch[1] "for" $location\$dir
+                    $GitMainBranch = $(git branch --show-current| Where-Object {$_.EndsWith("main") -or $_.EndsWith("master")}).split("* ")
+                    Write-Host "Fetching remote" $GitMainBranch "for" $location\$dir
                     # False sense of security, local branch only tracks local remote commit
                     if ($status -contains "nothing to commit, working tree clean") {
 
-                        git checkout $GitMainBranch[1] -q
+                        git checkout $GitMainBranch -q
                         git pull -q
-                        if (!($currentGitBranch -eq $GitMainBranch[1])){
+                        if (!($currentGitBranch -eq $GitMainBranch)){
                             git checkout $currentGitBranch
-                            Write-Host "pulled newest" $GitMainBranch[1] "from" $dir ", going back to" $currentGitBranch
+                            Write-Host "pulled newest" $GitMainBranch "from" $dir ", going back to" $currentGitBranch
                         }
-                        Write-Host "pulled newest" $GitMainBranch[1] "from" $dir
+                        Write-Host "pulled newest" $GitMainBranch "from" $dir
                         Set-Location ..
 
                     # Changes have been made on new branch, but not committed
@@ -96,13 +96,13 @@ function Update-Repositories {
                                 git add .
                                 git commit -m "automated branch creation + git commit"
                             }
-                            git checkout $GitMainBranch[1] -q
+                            git checkout $GitMainBranch -q
                             git pull -q
-                            if (!($currentGitBranch -eq $GitMainBranch[1])){
+                            if (!($currentGitBranch -eq $GitMainBranch)){
                                 git checkout $currentGitBranch
-                                Write-Host "pulled newest" $GitMainBranch[1] "from" $dir ", going back to" $currentGitBranch
+                                Write-Host "pulled newest" $GitMainBranch "from" $dir ", going back to" $currentGitBranch
                             }
-                            Write-Host "pulled newest" $GitMainBranch[1] "from" $dir
+                            Write-Host "pulled newest" $GitMainBranch "from" $dir
                             Set-Location ..
 
                         # Abort commiting edits
@@ -121,14 +121,14 @@ function Update-Repositories {
                     # Pull main/master from all folders containing hidden .git file
                     } elseif (Get-ChildItem -Path $dir -Directory -Hidden -Filter .git) {
 
-                        git checkout $GitMainBranch[1] -q
+                        git checkout $GitMainBranch -q
                         git pull -q
-                        if (!($currentGitBranch -eq $GitMainBranch[1])){
+                        if (!($currentGitBranch -eq $GitMainBranch)){
                             git checkout $currentGitBranch
-                            Write-Host "pulled newest" $GitMainBranch[1] "from" $dir ", going back to" $currentGitBranch
+                            Write-Host "pulled newest" $GitMainBranch "from" $dir ", going back to" $currentGitBranch
                         }
 
-                        Write-Host "pulled newest" $GitMainBranch[1] "from" $dir
+                        Write-Host "pulled newest" $GitMainBranch "from" $dir
                         Set-Location ..
 
                     }
