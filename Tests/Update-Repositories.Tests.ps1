@@ -1,5 +1,5 @@
 BeforeAll {
-    Import-Module ..\Update-Repositories\Update-Repositories.psm1 -Force
+    Import-Module /home/runner/work/Useful_PSMs/Useful_PSMs/Update-Repositories/Update-Repositories.psm1 -Force
 }
 
 Describe "Update-Repositories" {
