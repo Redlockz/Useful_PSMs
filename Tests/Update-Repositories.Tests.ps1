@@ -1,5 +1,5 @@
 BeforeAll {
-    Import-Module Update-Repositories/Update-Repositories.psm1 -Force
+    Import-Module Update-Repositories.psm1 -Force
 }
 
 Describe "Update-Repositories" {
