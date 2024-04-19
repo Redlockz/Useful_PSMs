@@ -34,4 +34,4 @@ jobs:
           $config = New-PesterConfiguration
           $config.Run.Path = "./Tests"
           $config.CodeCoverage.Enabled = $true
-          Invoke-Pester -Configuration $config
+          Invoke-Pester -Configuration $config -CI
