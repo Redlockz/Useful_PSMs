@@ -21,8 +21,6 @@ function Update-Repositories {
         None
 
     #>
-    PSAvoidUsingPositionalParameters = false
-
     $home_folder = "~\"
 
     # Check if config is present
@@ -204,4 +202,6 @@ function Update-Repositories {
     }
 
     exit 0
-    }
+}
+
+Update-Repositories
