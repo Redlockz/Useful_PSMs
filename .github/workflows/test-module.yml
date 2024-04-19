@@ -31,4 +31,7 @@ jobs:
       - name: Pester-Test
         shell: pwsh
         run: |
-          Invoke-Pester
+          $config = New-PesterConfiguration
+          $config.Run.Path = "./Tests"
+          $config.CodeCoverage.Enabled = $true
+          Invoke-Pester -Configuration $config
