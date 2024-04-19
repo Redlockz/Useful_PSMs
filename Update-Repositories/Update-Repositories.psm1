@@ -21,7 +21,6 @@ function Update-Repositories {
         None
 
     #>
-    PSAvoidUsingPositionalParameters = false
 
     $home_folder = "~\"
 
