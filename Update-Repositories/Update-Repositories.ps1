@@ -52,6 +52,7 @@ function Update-Repositories {
 
                 Set-Location $dir
 
+                $is_git_dir = Get-ChildItem -Path $dir -Directory -Hidden -Filter .git
                 # Condition to negate most non git folders
                 if (!(Get-ChildItem -Path "$location\$dir" -Directory -Hidden -Filter .git)){
 
@@ -65,7 +66,7 @@ function Update-Repositories {
 
                     $CurrentGitBranch = git branch --show-current
                     try {
-                    $GitMainBranch = $(git branch --show-current| Where-Object {$_.EndsWith("main") -or $_.EndsWith("master")}).split("* ")
+                        $GitMainBranch = $(git branch --show-current| Where-Object {$_.EndsWith("main") -or $_.EndsWith("master")}).split("* ")
                     }
                     catch {
                         # $_.Exception
@@ -79,9 +80,11 @@ function Update-Repositories {
                         if (!($currentGitBranch -eq $GitMainBranch)){
                             git checkout $currentGitBranch
                             Write-Host "pulled newest" $GitMainBranch "from" $dir ", going back to" $currentGitBranch
+                            Set-Location ..
+                        } else {
+                            Write-Host "pulled newest" $GitMainBranch "from" $dir
+                            Set-Location ..
                         }
-                        Write-Host "pulled newest" $GitMainBranch "from" $dir
-                        Set-Location ..
 
                     # Changes have been made on new branch, but not committed
                     } elseif ($status -contains "Changes not staged for commit:") {
@@ -106,9 +109,11 @@ function Update-Repositories {
                             if (!($currentGitBranch -eq $GitMainBranch)){
                                 git checkout $currentGitBranch
                                 Write-Host "pulled newest" $GitMainBranch "from" $dir ", going back to" $currentGitBranch
+                                Set-Location ..
+                            } else {
+                                Write-Host "pulled newest" $GitMainBranch "from" $dir
+                                Set-Location ..
                             }
-                            Write-Host "pulled newest" $GitMainBranch "from" $dir
-                            Set-Location ..
 
                         # Abort commiting edits
                         } elseif ($stash_status -eq "N") {
@@ -140,9 +145,11 @@ function Update-Repositories {
                             if (!($currentGitBranch -eq $GitMainBranch)){
                                 git checkout $currentGitBranch
                                 Write-Host "pulled newest" $GitMainBranch "from" $dir ", going back to" $currentGitBranch
+                                Set-Location ..
+                            } else {
+                                Write-Host "pulled newest" $GitMainBranch "from" $dir
+                                Set-Location ..
                             }
-                            Write-Host "pulled newest" $GitMainBranch "from" $dir
-                            Set-Location ..
 
                         # Abort commiting edits
                         } elseif ($stash_status -eq "N") {
@@ -157,20 +164,21 @@ function Update-Repositories {
 
                         Set-Location ..
 
-                    # Pull main/master from all folders containing hidden .git file
-                    } #elseif (Get-ChildItem -Path $dir -Directory -Hidden -Filter .git) {
+                    } elseif ($is_git_dir) {
 
-                    #     git checkout $GitMainBranch -q
-                    #     git pull -q
-                    #     if (!($currentGitBranch -eq $GitMainBranch)){
-                    #         git checkout $currentGitBranch
-                    #         Write-Host "pulled newest" $GitMainBranch "from" $dir ", going back to" $currentGitBranch
-                    #     }
+                        git checkout $GitMainBranch[1] -q
+                        git pull -q
+                        if (!($currentGitBranch -eq $GitMainBranch[1])){
+                            git checkout $currentGitBranch
+                            Write-Host "pulled newest" $GitMainBranch[1] "from" $dir ", going back to" $currentGitBranch
+                        }
 
-                    #     Write-Host "pulled newest" $GitMainBranch "from" $dir
-                    #     Set-Location ..
+                        Write-Host "pulled newest" $GitMainBranch[1] "from" $dir
+                        Set-Location ..
 
-                    # }
+                    } else {
+                        Set-Location ..
+                    }
                 }
             }
 
