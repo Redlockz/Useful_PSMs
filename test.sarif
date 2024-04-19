@@ -1,0 +1,65 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "PowerShell Static Analyzer",
+          "informationUri": "https://github.com/example/powershell-static-analyzer",
+          "version": "1.0.0"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "PSSA0001",
+          "ruleIndex": 1,
+          "level": "error",
+          "message": {
+            "text": "Avoid using aliases, use full cmdlet names instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///path/to/your/script.ps1",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 5,
+                  "endLine": 10,
+                  "endColumn": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PSSA0002",
+          "ruleIndex": 2,
+          "level": "warning",
+          "message": {
+            "text": "Use approved verbs for cmdlet names."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///path/to/your/script.ps1",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 1,
+                  "endLine": 15,
+                  "endColumn": 20
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
