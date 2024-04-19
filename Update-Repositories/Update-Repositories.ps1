@@ -52,7 +52,13 @@ function Update-Repositories {
 
                 Set-Location $dir
 
-                $is_git_dir = Get-ChildItem -Path $dir -Directory -Hidden -Filter .git
+                try {
+                    $is_git_dir = ${Get-ChildItem -Path $dir -Directory -Hidden -Filter .git}
+                }
+                catch {
+                    $_.Exception
+                    $is_git_dir = $true
+                }
                 # Condition to negate most non git folders
                 if (!(Get-ChildItem -Path "$location\$dir" -Directory -Hidden -Filter .git)){
 
@@ -69,7 +75,7 @@ function Update-Repositories {
                         $GitMainBranch = $(git branch --show-current| Where-Object {$_.EndsWith("main") -or $_.EndsWith("master")}).split("* ")
                     }
                     catch {
-                        # $_.Exception
+                        $_.Exception
                     }
                     Write-Host "Fetching remote" $GitMainBranch "for" $location\$dir
                     # False sense of security, local branch only tracks local remote commit
@@ -78,8 +84,8 @@ function Update-Repositories {
                         git checkout $GitMainBranch -q
                         git pull -q
                         if (!($currentGitBranch -eq $GitMainBranch)){
-                            git checkout $currentGitBranch
-                            Write-Host "pulled newest" $GitMainBranch "from" $dir ", going back to" $currentGitBranch
+                            git checkout $currentGitBranch -q
+                            Write-Host "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
                             Set-Location ..
                         } else {
                             Write-Host "pulled newest" $GitMainBranch "from" $dir
@@ -107,8 +113,8 @@ function Update-Repositories {
                             git checkout $GitMainBranch -q
                             git pull -q
                             if (!($currentGitBranch -eq $GitMainBranch)){
-                                git checkout $currentGitBranch
-                                Write-Host "pulled newest" $GitMainBranch "from" $dir ", going back to" $currentGitBranch
+                                git checkout $currentGitBranch -q
+                                Write-Host "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
                                 Set-Location ..
                             } else {
                                 Write-Host "pulled newest" $GitMainBranch "from" $dir
@@ -143,8 +149,8 @@ function Update-Repositories {
                             git checkout $GitMainBranch -q
                             git pull -q
                             if (!($currentGitBranch -eq $GitMainBranch)){
-                                git checkout $currentGitBranch
-                                Write-Host "pulled newest" $GitMainBranch "from" $dir ", going back to" $currentGitBranch
+                                git checkout $currentGitBranch -q
+                                Write-Host "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
                                 Set-Location ..
                             } else {
                                 Write-Host "pulled newest" $GitMainBranch "from" $dir
@@ -169,8 +175,8 @@ function Update-Repositories {
                         git checkout $GitMainBranch[1] -q
                         git pull -q
                         if (!($currentGitBranch -eq $GitMainBranch[1])){
-                            git checkout $currentGitBranch
-                            Write-Host "pulled newest" $GitMainBranch[1] "from" $dir ", going back to" $currentGitBranch
+                            git checkout $currentGitBranch -q
+                            Write-Host "pulled newest" $GitMainBranch[1] "from" $dir", going back to" $currentGitBranch
                         }
 
                         Write-Host "pulled newest" $GitMainBranch[1] "from" $dir
