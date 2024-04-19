@@ -31,4 +31,5 @@ jobs:
       - name: Pester-Test
         shell: pwsh
         run: |
-          Invoke-Pester Update-Repositories.Tests.ps1 -Passthru
+          Set-Location /Tests
+          Invoke-Pester
