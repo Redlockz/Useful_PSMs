@@ -35,4 +35,4 @@ jobs:
           $config.Run.Path = "./Tests"
           $config.CodeCoverage.Enabled = $true
           Set-Location ./Update-Repositories
-          Invoke-Pester -Configuration $config -Path Tests/
+          Invoke-Pester -Configuration $config -Path "..Tests/"
