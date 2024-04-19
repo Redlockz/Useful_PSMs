@@ -29,11 +29,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: downcase REPO
+      run: |
+        echo "REPO=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
 
     - name: Build the Docker image
       # Tag image to be built
       # Change ${{ github.repository }} variable by another image name if you want but don't forget changing also image-tag below
-      run: docker build . --file Dockerfile --tag ${{ github.repository }}:latest
+      run: docker build . --file Dockerfile --tag ${REPO}:latest
 
     - name: Sysdig Secure Inline Scan
       id: scan
