@@ -31,5 +31,4 @@ jobs:
       - name: Pester-Test
         shell: pwsh
         run: |
-          Set-Location /home/runner/work/Useful_PSMs/Tests
           Invoke-Pester
