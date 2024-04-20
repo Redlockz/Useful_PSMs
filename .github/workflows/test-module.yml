@@ -28,8 +28,8 @@ jobs:
       - name: Test-PSModule
         shell: pwsh
         run: | 
-          Invoke-ScriptAnalyzer -ExcludeRule PSAvoidUsingWriteHost, \
-            PSAvoidUsingPositionalParameters, PSUseSingularNouns, \
+          Invoke-ScriptAnalyzer -ExcludeRule PSAvoidUsingWriteHost,  \
+            PSAvoidUsingPositionalParameters, PSUseSingularNouns,  \
             PSUseShouldProcessForStateChangingFunctions -EnableExit \
             -Path Update-Repositories/Update-Repositories.psm1
 
