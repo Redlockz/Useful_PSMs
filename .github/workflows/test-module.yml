@@ -31,7 +31,7 @@ jobs:
       - name: Pester-Test
         shell: pwsh
         run: |
-          echo . > ~\ado_gitfolder.txt
+          echo D:\a\Useful_PSMs\Useful_PSMs > ~\ado_gitfolder.txt
           $config = New-PesterConfiguration
           $config.Run.Path = ".\Tests"
           $config.CodeCoverage.Enabled = $true
