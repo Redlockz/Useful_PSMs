@@ -5,28 +5,7 @@ BeforeAll {
 Describe "Update-Repositories" {
     Context "Read-Host" {
         It "Should throw" {
-            Update-Repositories | Should -throw
+            Update-Repositories | Should -Throw
         }
     }
 }
-
-# Import-Module -Name "c:\LocationOfModules\Pester"
-
-# Function Test-Foo {
-#     $filePath = Read-Host "Tell me a file path"
-#     $filePath
-# }
-# Describe "Test-Foo" {
-#   Context "When something" {
-#         Mock Read-Host {return "c:\example"}
-
-#         $result = Test-Foo
-
-#         It "Returns correct result" { # should work
-#             $result | Should Be "c:\example"
-#         }
-#          It "Returns correct result" { # should not work
-#             $result | Should Be "SomeThingWrong"
-#         }
-#     }
-# }
