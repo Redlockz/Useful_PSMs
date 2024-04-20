@@ -29,7 +29,7 @@ jobs:
         shell: pwsh
         run: | 
           Invoke-ScriptAnalyzer -ExcludeRule PSAvoidUsingWriteHost \
-            PSAvoidUsingPositionalParameters,PSUseSingularNouns \
+            PSAvoidUsingPositionalParameters,PSUseSingularNouns, \
             PSUseShouldProcessForStateChangingFunctions -EnableExit \
             -Path Update-Repositories/Update-Repositories.psm1
 
