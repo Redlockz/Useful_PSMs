@@ -5,7 +5,7 @@ BeforeAll {
 Describe "Update-Repositories" {
     Context "Read-Host" {
         It "Should throw" {
-            Update-Repositories
+            {Update-Repositories} | Should -Throw
         }
     }
 }
