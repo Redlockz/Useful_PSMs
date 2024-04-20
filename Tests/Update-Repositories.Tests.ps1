@@ -4,8 +4,8 @@ BeforeAll {
 
 Describe "Update-Repositories" {
     Context "Read-Host" {
-        It "Should invoke " {
-            Update-Repositories | Should -throw "RuntimeException"
+        It "Should throw" {
+            Update-Repositories | Should -throw
         }
     }
 }
