@@ -17,7 +17,7 @@ on:
 jobs:
   Test-PSModule:
     name: Test-PSModule
-    runs-on: ubuntu-latest
+    runs-on: 	windows-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -26,13 +26,13 @@ jobs:
         uses: PSModule/Initialize-PSModule@main
 
       - name: Test-PSModule
-        run: pwsh -NoProfile -NoLogo -Command "Invoke-ScriptAnalyzer -ExcludeRule PSAvoidUsingWriteHost,PSAvoidUsingPositionalParameters,PSUseSingularNouns,PSUseShouldProcessForStateChangingFunctions -EnableExit -Path Update-Repositories/Update-Repositories.psm1"
+        run: pwsh -NoProfile -NoLogo -Command "Invoke-ScriptAnalyzer -ExcludeRule PSAvoidUsingWriteHost,PSAvoidUsingPositionalParameters,PSUseSingularNouns,PSUseShouldProcessForStateChangingFunctions -EnableExit -Path Update-Repositories\Update-Repositories.psm1"
 
       - name: Pester-Test
         shell: pwsh
         run: |
-          echo . > $HOME/ado_gitfolder.txt
+          echo . > ~\ado_gitfolder.txt
           $config = New-PesterConfiguration
-          $config.Run.Path = "./Tests"
+          $config.Run.Path = ".\Tests"
           $config.CodeCoverage.Enabled = $true
           Invoke-Pester -Configuration $config
