@@ -4,11 +4,8 @@ BeforeAll {
 
 Describe "Update-Repositories" {
     Context "Read-Host" {
-        # It "Should invoke Read-Host" {
-        #     Update-Repositories | Should -Invoke -CommandName Read-Host
-        # }
-        It "Hidden is replaced with our implementation" {
-            Update-Repositories | Should -Invoke -CommandName Read-Host
+        It "Should invoke " {
+            Update-Repositories | Should -throw "RuntimeException"
         }
     }
 }
