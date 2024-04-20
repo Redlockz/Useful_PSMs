@@ -31,9 +31,13 @@ jobs:
       - name: Pester-Test
         shell: pwsh
         run: |
-          pwd
+          $loc = pwd
+          Write-Host $loc
+          $loc
           Get-Location
-          dir
+          $dir = dir
+          Write-Host $dir
+          $dir
           $config = New-PesterConfiguration
           $config.Run.Path = "./Tests"
           $config.CodeCoverage.Enabled = $true
