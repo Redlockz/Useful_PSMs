@@ -7,7 +7,7 @@ Describe "Update-Repositories" {
     # It "Returns nothing to commit, working tree clean" {
     #     Update-Repositories | Should -BeLike "On branch main Your branch is up to date with 'origin/main'.  nothing to commit, working tree clean"
     # }
-    It "Returns RuntimeException: " {
-        Update-Repositories | Should Should -Invoke -CommandName Read-Host
+    It "Should invoke Read-Host" {
+        Update-Repositories | Should -Invoke -CommandName Read-Host
     }
 }
