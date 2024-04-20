@@ -28,10 +28,10 @@ jobs:
       - name: Test-PSModule
         shell: pwsh
         run: | 
-          Invoke-ScriptAnalyzer -ExcludeRule PSAvoidUsingWriteHost `
-          PSAvoidUsingPositionalParameters,PSUseSingularNouns `
-          PSUseShouldProcessForStateChangingFunctions -EnableExit `
-          -Path Update-Repositories/Update-Repositories.psm1
+          Invoke-ScriptAnalyzer -ExcludeRule PSAvoidUsingWriteHost \
+            PSAvoidUsingPositionalParameters,PSUseSingularNouns \
+            PSUseShouldProcessForStateChangingFunctions -EnableExit \
+            -Path Update-Repositories/Update-Repositories.psm1
 
       - name: Pester-Test
         shell: pwsh
