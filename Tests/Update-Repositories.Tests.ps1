@@ -4,7 +4,7 @@ BeforeAll {
 
 Describe "Update-Repositories" {
     Context "Read-Host" {
-        Mock Read-Host {return "/home/runner/work/Useful_PSMs/Useful_PSMs"}
+        Mock Update-Repositories {return "/home/runner/work/Useful_PSMs/Useful_PSMs"}
         # It "Should invoke Read-Host" {
         #     Update-Repositories | Should -Invoke -CommandName Read-Host
         # }
