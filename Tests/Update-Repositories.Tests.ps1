@@ -1,10 +1,9 @@
 BeforeAll {
-    Import-Module -Name /home/runner/work/Useful_PSMs/Useful_PSMs/Update-Repositories/Update-Repositories.psm1 -Verbose -Force
+    Import-Module -Name D:\a\Useful_PSMs\Useful_PSMs\Update-Repositories\Update-Repositories.psm1 -Verbose -Force
 }
 
 Describe "Update-Repositories" {
     Context "Read-Host" {
-        Mock Update-Repositories {return "/home/runner/work/Useful_PSMs/Useful_PSMs"}
         # It "Should invoke Read-Host" {
         #     Update-Repositories | Should -Invoke -CommandName Read-Host
         # }
