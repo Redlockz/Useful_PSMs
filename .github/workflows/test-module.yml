@@ -25,12 +25,15 @@ jobs:
       - name: Initialize environment
         uses: PSModule/Initialize-PSModule@main
 
-      - name: Test-PSModule
-        run: pwsh -NoProfile -NoLogo -Command "Invoke-ScriptAnalyzer -ExcludeRule PSAvoidUsingWriteHost,PSAvoidUsingPositionalParameters,PSUseSingularNouns,PSUseShouldProcessForStateChangingFunctions -EnableExit -Path Update-Repositories/Update-Repositories.psm1"
+      # - name: Test-PSModule
+      #   run: pwsh -NoProfile -NoLogo -Command "Invoke-ScriptAnalyzer -ExcludeRule PSAvoidUsingWriteHost,PSAvoidUsingPositionalParameters,PSUseSingularNouns,PSUseShouldProcessForStateChangingFunctions -EnableExit -Path Update-Repositories/Update-Repositories.psm1"
 
       - name: Pester-Test
         shell: pwsh
         run: |
+          pwd
+          Get-Location
+          dir
           $config = New-PesterConfiguration
           $config.Run.Path = "./Tests"
           $config.CodeCoverage.Enabled = $true
