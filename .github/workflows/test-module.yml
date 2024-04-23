@@ -35,7 +35,7 @@ jobs:
           $config.Run.Path = ".\Tests"
           $config.CodeCoverage.Enabled = $true
           $config.CodeCoverage.Path = ".\Update-Repositories"
-          $conf.Output.Verbosity = "Diagnostic"
+          $config.Output.Verbosity = "Diagnostic"
           Invoke-Pester -Configuration $config -Verbose
 
       - name: Publish results
