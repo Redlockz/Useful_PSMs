@@ -1,3 +1,4 @@
+Write-Warning "Test"
 function Update-Repositories {
 
         <#
@@ -197,6 +198,7 @@ function Update-Repositories {
         }
     } else {
 
+        Write-Warning "Test"
         throw "location not found, are you sure you entered the right directory?"
         exit 1
 
