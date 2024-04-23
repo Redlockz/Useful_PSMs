@@ -1,4 +1,3 @@
-Write-Warning "Test"
 function Update-Repositories {
 
         <#
@@ -40,8 +39,10 @@ function Update-Repositories {
 
     }
 
+    Write-Warning "Testing" $location
     if (Test-Path $location) {
 
+        Write-Warning "location exists"
         Set-Location $location
 
         $arr = Get-ChildItem $location |
@@ -50,12 +51,13 @@ function Update-Repositories {
 
         $is_git_installed = $ENV:path -match "Git"
 
+        Write-Warning "Checking if git is installed:..." $is_git_installed
         if ($is_git_installed) {
 
             forEach ($dir in $arr) {
 
                 Set-Location $dir
-
+                Write-Warning "Checking directory" $dir
                 try {
                     $is_git_dir = ${Get-ChildItem -Path $dir -Directory -Hidden -Filter .git}
                 }
