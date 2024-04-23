@@ -12,7 +12,12 @@ Describe "Update-Repositories" {
         }
         It "Success" {
             Mock Write-Host {}
-            Update-Repositories | Assert-MockCalled Write-Host -Scope It
+            Update-Repositories 
+            Assert-MockCalled Write-Host -Scope It -ParameterFilter { }
+            Assert-MockCalled Write-Host -Exactly 3 -Scope It
+            Assert-MockCalled Write-Host -Exactly 1 -Scope It -ParameterFilter { $Object -eq "testing location" }
+            Assert-MockCalled Write-Host -Exactly 1 -Scope It -ParameterFilter { $Object -eq "Updated all repositories" }
+            Assert-MockCalled Write-Host -Exactly 1 -Scope It -ParameterFilter { $Object -eq "Updated all Updated git workspace" }
         }
     }
 }
