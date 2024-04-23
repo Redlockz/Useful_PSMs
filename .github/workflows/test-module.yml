@@ -31,8 +31,10 @@ jobs:
       - name: Test Workflow
         shell: pwsh
         run: |
+          $VerbosePreference = "Continue"
           Import-Module -Name D:\a\Useful_PSMs\Useful_PSMs\Update-Repositories\Update-Repositories.psm1 -Verbose -Force
           Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'
+          $VerbosePreference = "Continue"
           Update-Repositories -Verbose
           
       - name: Pester-Test
