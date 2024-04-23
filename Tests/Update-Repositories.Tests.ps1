@@ -10,7 +10,7 @@ Describe "Update-Repositories" {
     }
     Context "Enter git directory and update repository" {
         It "Create Test File" {
-            Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs' | Should -Not -Throw
+            {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
         }
         It "Should throw" {
             {Update-Repositories} | Should -Not -Throw
