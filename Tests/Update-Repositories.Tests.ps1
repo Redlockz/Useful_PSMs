@@ -10,8 +10,8 @@ Describe "Update-Repositories" {
     }
     Context "Enter git directory and update repository" {
         It "Should throw git error" {
-            $content = Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'
-            $content
+            New-Item $HOME\.ado_gitfolder.txt
+            Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'
             Update-Repositories
         }
     }
