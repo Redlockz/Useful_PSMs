@@ -37,7 +37,6 @@ jobs:
           $config.CodeCoverage.Path = ".\Update-Repositories"
           $config.Output.Verbosity = "Diagnostic"
           $config.Output.StackTraceVerbosity = "Full"
-          $config.Output.WriteDebugMessages = "true"
           Invoke-Pester -Configuration $config -Verbose
 
       - name: Publish results
