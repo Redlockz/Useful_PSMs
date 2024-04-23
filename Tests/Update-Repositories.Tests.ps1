@@ -11,7 +11,9 @@ Describe "Update-Repositories" {
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
         }
         It "brackets" {
-            Update-Repositories Should -Not -Throw
+            Mock Write-Host {}
+            Update-Repositories
+            Assert-MockCalled Write-Host -Scope It -ParameterFilter { "Updated all repositories" }
         }
     }
 }
