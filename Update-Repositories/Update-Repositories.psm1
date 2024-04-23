@@ -28,10 +28,12 @@ function Update-Repositories {
     # Check if config is present
     if (Test-Path $home_folder\.ado_gitfolder.txt) {
 
+        Write-Warning "Getting content"
         $location = Get-Content "$home_folder\.ado_gitfolder.txt"
 
     } else {
 
+        Write-Warning "File not found"
         [string]$location = Read-Host "Enter the path to your base git directory containing your git repositories, example C:\Users\User1\Projects"
         New-Item "$home_folder\.ado_gitfolder.txt"
         Set-Content "$home_folder\.ado_gitfolder.txt" "$location"
@@ -112,6 +114,7 @@ function Update-Repositories {
                                 git add .
                                 git commit -m "automated branch creation + git commit"
                             }
+                            Write-Warning "checking out" $GitMainBranch
                             git checkout $GitMainBranch -q
                             git pull -q
                             if (!($currentGitBranch -eq $GitMainBranch)){
@@ -170,6 +173,7 @@ function Update-Repositories {
                     # To catch most edge cases
                     } elseif ($status -contains "fatal:" -Or $status -contains "error:") {
 
+                        Write-Warning $status
                         Set-Location ..
 
                     } elseif ($is_git_dir) {
@@ -185,6 +189,7 @@ function Update-Repositories {
                         Set-Location ..
 
                     } else {
+                        Write-Warning "Not a git dir"
                         Set-Location ..
                     }
                 }
@@ -204,6 +209,6 @@ function Update-Repositories {
         exit 1
 
     }
-
+    Write-Warning "Exit 0"
     exit 0
     }
