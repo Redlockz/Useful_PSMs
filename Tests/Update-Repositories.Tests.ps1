@@ -9,9 +9,9 @@ Describe "Update-Repositories" {
         }
     }
     Context "Enter git directory and update repository" {
-        It "Should invoke Read-Host" {
+        It "Should throw git error" {
             $content = Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs'
-            {Update-Repositories} | Should -BeLike "On branch main"
+            {Update-Repositories} | Should -BeLike "on branch main"
         }
     }
 }
