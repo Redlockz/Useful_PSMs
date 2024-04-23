@@ -11,7 +11,8 @@ Describe "Update-Repositories" {
     Context "Enter git directory and update repository" {
         Set-Content -Path "D:\a\Useful_PSMs\Useful_PSMs\.ado_gitfolder.txt" -Value 'nada'
         It "Should invoke Read-Host" {
-            {Update-Repositories} | Should -Invoke -CommandName "Read-Host"
+            $result = Update-Repositories
+            Should -Invoke Read-Host
         }
     }
 }
