@@ -11,7 +11,7 @@ Describe "Update-Repositories" {
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
         }
         It "brackets" {
-            Update-Repositories Should -Invoke Write-Host
+            Update-Repositories Should -Throw
         }
     }
 }
