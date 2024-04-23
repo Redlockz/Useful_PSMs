@@ -10,10 +10,10 @@ Describe "Update-Repositories" {
         It "Create Test File" {
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
         }
-        It "brackets" {
+        It "Success" {
             Mock Write-Host {}
             Update-Repositories
-            Assert-MockCalled Write-Host -Scope It -ParameterFilter { "Updated all repositories" }
+            Assert-MockCalled Write-Host -Exactly 3 -Scope It
         }
     }
 }
