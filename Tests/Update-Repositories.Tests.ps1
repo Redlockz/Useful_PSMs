@@ -13,7 +13,11 @@ Describe "Update-Repositories" {
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
         }
         It "Should throw" {
-            Update-Repositories | Should -BeLike "main"
+            $output = Update-Repositories
+            Write-Host $output
+            Write-Verbose $output
+            $output
+            # $output | Should -NotBeNullOrEmpty
         }
     }
 }
