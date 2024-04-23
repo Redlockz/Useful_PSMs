@@ -27,22 +27,19 @@ function Update-Repositories {
     # Check if config is present
     if (Test-Path $home_folder\.ado_gitfolder.txt) {
 
-        Write-Warning "Getting content"
         $location = Get-Content "$home_folder\.ado_gitfolder.txt"
 
     } else {
 
-        Write-Warning "File not found"
         [string]$location = Read-Host "Enter the path to your base git directory containing your git repositories, example C:\Users\User1\Projects"
         New-Item "$home_folder\.ado_gitfolder.txt"
         Set-Content "$home_folder\.ado_gitfolder.txt" "$location"
 
     }
 
-    Write-Warning "Testing location"
+    Write-Host "Testing location"
     if (Test-Path $location) {
 
-        Write-Warning "location exists"
         Set-Location $location
 
         $arr = Get-ChildItem $location |
@@ -51,13 +48,11 @@ function Update-Repositories {
 
         $is_git_installed = $ENV:path -match "Git"
 
-        Write-Warning "Checking if git is installed:..."
         if ($is_git_installed) {
 
             forEach ($dir in $arr) {
 
                 Set-Location $dir
-                Write-Warning "Checking directory" 
                 try {
                     $is_git_dir = ${Get-ChildItem -Path $dir -Directory -Hidden -Filter .git}
                 }
@@ -74,7 +69,7 @@ function Update-Repositories {
                 } else {
 
                     $status = git status
-                    Write-Warning $status
+                    Write-Host $status
 
                     $CurrentGitBranch = git branch --show-current
                     try {
@@ -83,7 +78,7 @@ function Update-Repositories {
                     catch {
                         $_.Exception
                     }
-                    Write-Warning "Fetching remote" $GitMainBranch "for" $location\$dir
+                    Write-Host "Fetching remote" $GitMainBranch "for" $location\$dir
                     # False sense of security, local branch only tracks local remote commit
                     if ($status -contains "nothing to commit, working tree clean") {
 
@@ -91,17 +86,17 @@ function Update-Repositories {
                         git pull -q
                         if (!($currentGitBranch -eq $GitMainBranch)){
                             git checkout $currentGitBranch -q
-                            Write-Warning "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
+                            Write-Host "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
                             Set-Location ..
                         } else {
-                            Write-Warning "pulled newest" $GitMainBranch "from" $dir
+                            Write-Host "pulled newest" $GitMainBranch "from" $dir
                             Set-Location ..
                         }
 
                     # Changes have been made on new branch, but not committed
                     } elseif ($status -contains "Changes not staged for commit:") {
 
-                        Write-Warning "changed files not stashed for commit, do you want to commit your files for later use?"
+                        Write-Host "changed files not stashed for commit, do you want to commit your files for later use?"
                         [string]$stash_status = Read-Host 'Please enter "Y" for Yes, or "N" for No'
 
                         # commit edits to temp commit
@@ -111,34 +106,34 @@ function Update-Repositories {
                                 git add .
                                 git commit -m "automated git commit"
                             } elseif ($CurrentGitBranch -eq $GitMainBranch) {
-                                Write-Warning "Not committing to $GitMainBranch, making temporary branch for commit"
+                                Write-Host "Not committing to $GitMainBranch, making temporary branch for commit"
                                 git checkout -b automated/branch
                                 git add .
                                 git commit -m "automated branch creation + git commit"
                             }
-                            Write-Warning "checking out" $GitMainBranch
+                            Write-Host "checking out" $GitMainBranch
                             git checkout $GitMainBranch -q
                             git pull -q
                             if (!($currentGitBranch -eq $GitMainBranch)){
                                 git checkout $currentGitBranch -q
-                                Write-Warning "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
+                                Write-Host "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
                                 Set-Location ..
                             } else {
-                                Write-Warning "pulled newest" $GitMainBranch "from" $dir
+                                Write-Host "pulled newest" $GitMainBranch "from" $dir
                                 Set-Location ..
                             }
 
                         # Abort commiting edits
                         } elseif ($stash_status -eq "N") {
 
-                            Write-Warning "Skipped" $dir
+                            Write-Host "Skipped" $dir
                             Set-Location ..
 
                         }
 
                     } elseif ($status[1] -contains "Your branch is ahead of 'origin/$CurrentGitBranch' by 1 commit.") {
 
-                        Write-Warning "Your branch is ahead of origin, push changes to $CurrentGitBranch"
+                        Write-Host "Your branch is ahead of origin, push changes to $CurrentGitBranch"
                         [string]$stash_status = Read-Host 'Please enter "Y" for Yes, or "N" for No'
 
                         # commit edits to temp commit
@@ -148,7 +143,7 @@ function Update-Repositories {
                                 git add .
                                 git commit -m "automated git commit"
                             } elseif ($CurrentGitBranch -eq $GitMainBranch) {
-                                Write-Warning "Not committing to $GitMainBranch, making temporary branch for commit"
+                                Write-Host "Not committing to $GitMainBranch, making temporary branch for commit"
                                 git checkout -b automated/branch
                                 git add .
                                 git commit -m "automated branch creation + git commit"
@@ -157,17 +152,17 @@ function Update-Repositories {
                             git pull -q
                             if (!($currentGitBranch -eq $GitMainBranch)){
                                 git checkout $currentGitBranch -q
-                                Write-Warning "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
+                                Write-Host "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
                                 Set-Location ..
                             } else {
-                                Write-Warning "pulled newest" $GitMainBranch "from" $dir
+                                Write-Host "pulled newest" $GitMainBranch "from" $dir
                                 Set-Location ..
                             }
 
                         # Abort commiting edits
                         } elseif ($stash_status -eq "N") {
 
-                            Write-Warning "Skipped" $dir
+                            Write-Host "Skipped" $dir
                             Set-Location ..
 
                         }
@@ -175,7 +170,7 @@ function Update-Repositories {
                     # To catch most edge cases
                     } elseif ($status -contains "fatal:" -Or $status -contains "error:") {
 
-                        Write-Warning $status
+                        Write-Host $status
                         Set-Location ..
 
                     } elseif ($is_git_dir) {
@@ -184,14 +179,14 @@ function Update-Repositories {
                         git pull -q
                         if (!($currentGitBranch -eq $GitMainBranch[1])){
                             git checkout $currentGitBranch -q
-                            Write-Warning "pulled newest" $GitMainBranch[1] "from" $dir", going back to" $currentGitBranch
+                            Write-Host "pulled newest" $GitMainBranch[1] "from" $dir", going back to" $currentGitBranch
                         }
 
-                        Write-Warning "pulled newest" $GitMainBranch[1] "from" $dir
+                        Write-Host "pulled newest" $GitMainBranch[1] "from" $dir
                         Set-Location ..
 
                     } else {
-                        Write-Warning "Not a git dir"
+                        Write-Host "Not a git dir"
                         Set-Location ..
                     }
                 }
@@ -199,18 +194,20 @@ function Update-Repositories {
 
         } else {
 
-            Write-Warning "git not found"
+            Write-Host "git not found"
             throw "git is not part of your environment, please add git to your env or install git"
             exit 1
 
         }
     } else {
 
-        Write-Warning "location not found"
+        Write-Host "location not found"
         throw "location not found, are you sure you entered the right directory?"
         exit 1
 
     }
-    Write-Warning "Exit 0"
+    Write-Host "Updated all repositories"
+    Write-Host "Updated git workspace"
+    
     exit 0
     }
