@@ -22,7 +22,7 @@ function Update-Repositories {
 
     #>
 
-    $home_folder = "~\"
+    $home_folder = $HOME
 
     # Check if config is present
     if (Test-Path $home_folder\.ado_gitfolder.txt) {
