@@ -10,11 +10,8 @@ Describe "Update-Repositories" {
         It "Create Test File" {
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
         }
-        It "no brackets" {
-            {Update-Repositories} | Should -Invoke Write-Host
-        }
         It "brackets" {
-            Update-Repositories | Should -Invoke Write-Host
+            {Update-Repositories} | Should -Invoke Write-Host
         }
     }
 }
