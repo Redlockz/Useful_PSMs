@@ -36,7 +36,8 @@ jobs:
           $config.CodeCoverage.Enabled = $true
           $config.CodeCoverage.Path = ".\Update-Repositories"
           $config.Output.Verbosity = "Diagnostic"
-          Invoke-Pester -Configuration $config -Verbose
+          $pesterResult = Invoke-Pester -Configuration $config -Container $container -PassThru
+          $pesterResult.tests | Format-Table ExpandedPath, StandardOutput
 
       - name: Publish results
         uses: actions/upload-artifact@v4
