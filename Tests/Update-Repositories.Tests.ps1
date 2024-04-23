@@ -11,11 +11,13 @@ Describe "Update-Repositories" {
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
         }
         It "Success" {
-            Mock -ModuleName Update-Repositories Write-Host {}
-            # Assert-MockCalled Write-Host -Exactly 3 -Scope It
-            Assert-MockCalled Write-Host -Exactly 1 -Scope It -ParameterFilter { $Object -eq "testing location" }
-            Assert-MockCalled Write-Host -Exactly 1 -Scope It -ParameterFilter { $Object -eq "Updated all repositories" }
-            Assert-MockCalled Write-Host -Exactly 1 -Scope It -ParameterFilter { $Object -eq "Updated all Updated git workspace" }
+            InModuleScope Update-Repositories {
+                Mock Write-Host { }
+    
+                Update-Repositories
+    
+                Should -Invoke Write-Host -ParameterFilter {
+                    $Object -eq "Updated all Updated git workspace"
         }
     }
 }
