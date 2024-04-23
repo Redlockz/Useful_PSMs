@@ -12,7 +12,7 @@ Describe "Update-Repositories" {
         It "Should invoke Read-Host" {
             Write-Host "Testing"
             $content = Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs\'
-            $content
+            Write-Host $content
             $result = Update-Repositories
             Should -BeLike "*Your branch is up to date*"
             Write-Host $result
