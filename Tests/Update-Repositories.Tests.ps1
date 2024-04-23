@@ -10,8 +10,11 @@ Describe "Update-Repositories" {
         It "Create Test File" {
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
         }
-        It "Should throw" {
-            $test = Update-Repositories | Should -Not -BeNullOrEmpty
+        It "no brackets" {
+            Update-Repositories | Should -Not -BeNullOrEmpty
+        }
+        It "brackets" {
+            {Update-Repositories} | Should -Not -BeNullOrEmpty
         }
     }
 }
