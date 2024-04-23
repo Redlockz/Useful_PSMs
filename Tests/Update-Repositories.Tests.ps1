@@ -10,9 +10,13 @@ Describe "Update-Repositories" {
     }
     Context "Enter git directory and update repository" {
         It "Should invoke Read-Host" {
-            Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs\'
+            Write-Host "Testing"
+            $content = Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs\'
+            $content
             $result = Update-Repositories
             Should -BeLike "*Your branch is up to date*"
+            Write-Host $result
+            $result
         }
     }
 }
