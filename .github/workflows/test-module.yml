@@ -33,7 +33,7 @@ jobs:
         run: |
           Import-Module -Name D:\a\Useful_PSMs\Useful_PSMs\Update-Repositories\Update-Repositories.psm1 -Verbose -Force
           Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'
-          Update-Repositories
+          Update-Repositories -Verbose
           
       - name: Pester-Test
         shell: pwsh
