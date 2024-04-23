@@ -13,10 +13,7 @@ Describe "Update-Repositories" {
             Write-Host "Testing"
             $content = Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs\'
             Write-Host $content
-            $result = Update-Repositories
-            Should -BeLike "*Your branch is up to date*"
-            Write-Host $result
-            $result
+            {Update-Repositories} | Should -BeLike "*Your branch is up to date*"
         }
     }
 }
