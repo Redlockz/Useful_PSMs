@@ -3,12 +3,10 @@ BeforeAll {
 }
 
 Describe "Update-Repositories" {
-    Context "location not found" {
+    Context "Update-Repositories" {
         It "Should throw" {
             {Update-Repositories} | Should -Throw "*location not found*"
         }
-    }
-    Context "Enter git directory and update repository" {
         It "Create Test File" {
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
         }
@@ -17,7 +15,7 @@ Describe "Update-Repositories" {
             Write-Host $output
             Write-Verbose $output
             $output
-            # $output | Should -NotBeNullOrEmpty
+            $output | Should -NotBeNullOrEmpty
         }
     }
 }
