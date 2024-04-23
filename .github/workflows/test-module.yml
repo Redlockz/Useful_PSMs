@@ -35,3 +35,21 @@ jobs:
           $config.Run.Path = ".\Tests"
           $config.CodeCoverage.Enabled = $true
           Invoke-Pester -Configuration $config
+
+      - name: Publish results
+        uses: actions/upload-artifact@v4
+        with:
+          name: Coverage.zip
+          path: '*.xml'
+          overwrite: true
+
+  Build-Code:
+    needs: Test-PSModule
+    name: Build-Code
+    runs-on: 	windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Initialize environment
+        uses: PSModule/Initialize-PSModule@main
