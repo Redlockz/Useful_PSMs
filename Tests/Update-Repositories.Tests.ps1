@@ -14,7 +14,7 @@ Describe "Update-Repositories" {
             # {Update-Repositories} | Should -BeLike "" 
             $obj = Update-Repositories
             write-output $obj
-            $obj | Should -Not -BeNullOrEmpty
+            $obj | Should -Throw
         }
     }
 }
