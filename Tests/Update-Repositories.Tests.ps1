@@ -11,7 +11,7 @@ Describe "Update-Repositories" {
     Context "Enter git directory and update repository" {
         It "Should invoke Read-Host" {
             $content = Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs'
-            {Update-Repositories} | Should -Throw "*git is not part of your environment*"
+            {Update-Repositories} | Should -BeLike "On branch main"
         }
     }
 }
