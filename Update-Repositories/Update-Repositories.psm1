@@ -192,7 +192,7 @@ function Update-Repositories {
 
         } else {
 
-            Write-Warning "git not found
+            Write-Warning "git not found"
             throw "git is not part of your environment, please add git to your env or install git"
             exit 1
 
