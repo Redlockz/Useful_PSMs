@@ -70,7 +70,7 @@ function Update-Repositories {
                 } else {
 
                     $status = git status
-                    Write-Verbose $status
+                    Write-Warning $status
 
                     $CurrentGitBranch = git branch --show-current
                     try {
@@ -79,7 +79,7 @@ function Update-Repositories {
                     catch {
                         $_.Exception
                     }
-                    Write-Verbose "Fetching remote" $GitMainBranch "for" $location\$dir
+                    Write-Warning "Fetching remote" $GitMainBranch "for" $location\$dir
                     # False sense of security, local branch only tracks local remote commit
                     if ($status -contains "nothing to commit, working tree clean") {
 
@@ -87,17 +87,17 @@ function Update-Repositories {
                         git pull -q
                         if (!($currentGitBranch -eq $GitMainBranch)){
                             git checkout $currentGitBranch -q
-                            Write-Verbose "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
+                            Write-Warning "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
                             Set-Location ..
                         } else {
-                            Write-Verbose "pulled newest" $GitMainBranch "from" $dir
+                            Write-Warning "pulled newest" $GitMainBranch "from" $dir
                             Set-Location ..
                         }
 
                     # Changes have been made on new branch, but not committed
                     } elseif ($status -contains "Changes not staged for commit:") {
 
-                        Write-Verbose "changed files not stashed for commit, do you want to commit your files for later use?"
+                        Write-Warning "changed files not stashed for commit, do you want to commit your files for later use?"
                         [string]$stash_status = Read-Host 'Please enter "Y" for Yes, or "N" for No'
 
                         # commit edits to temp commit
@@ -107,7 +107,7 @@ function Update-Repositories {
                                 git add .
                                 git commit -m "automated git commit"
                             } elseif ($CurrentGitBranch -eq $GitMainBranch) {
-                                Write-Verbose "Not committing to $GitMainBranch, making temporary branch for commit"
+                                Write-Warning "Not committing to $GitMainBranch, making temporary branch for commit"
                                 git checkout -b automated/branch
                                 git add .
                                 git commit -m "automated branch creation + git commit"
@@ -116,24 +116,24 @@ function Update-Repositories {
                             git pull -q
                             if (!($currentGitBranch -eq $GitMainBranch)){
                                 git checkout $currentGitBranch -q
-                                Write-Verbose "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
+                                Write-Warning "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
                                 Set-Location ..
                             } else {
-                                Write-Verbose "pulled newest" $GitMainBranch "from" $dir
+                                Write-Warning "pulled newest" $GitMainBranch "from" $dir
                                 Set-Location ..
                             }
 
                         # Abort commiting edits
                         } elseif ($stash_status -eq "N") {
 
-                            Write-Verbose "Skipped" $dir
+                            Write-Warning "Skipped" $dir
                             Set-Location ..
 
                         }
 
                     } elseif ($status[1] -contains "Your branch is ahead of 'origin/$CurrentGitBranch' by 1 commit.") {
 
-                        Write-Verbose "Your branch is ahead of origin, push changes to $CurrentGitBranch"
+                        Write-Warning "Your branch is ahead of origin, push changes to $CurrentGitBranch"
                         [string]$stash_status = Read-Host 'Please enter "Y" for Yes, or "N" for No'
 
                         # commit edits to temp commit
@@ -143,7 +143,7 @@ function Update-Repositories {
                                 git add .
                                 git commit -m "automated git commit"
                             } elseif ($CurrentGitBranch -eq $GitMainBranch) {
-                                Write-Verbose "Not committing to $GitMainBranch, making temporary branch for commit"
+                                Write-Warning "Not committing to $GitMainBranch, making temporary branch for commit"
                                 git checkout -b automated/branch
                                 git add .
                                 git commit -m "automated branch creation + git commit"
@@ -152,17 +152,17 @@ function Update-Repositories {
                             git pull -q
                             if (!($currentGitBranch -eq $GitMainBranch)){
                                 git checkout $currentGitBranch -q
-                                Write-Verbose "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
+                                Write-Warning "pulled newest" $GitMainBranch "from" $dir", going back to" $currentGitBranch
                                 Set-Location ..
                             } else {
-                                Write-Verbose "pulled newest" $GitMainBranch "from" $dir
+                                Write-Warning "pulled newest" $GitMainBranch "from" $dir
                                 Set-Location ..
                             }
 
                         # Abort commiting edits
                         } elseif ($stash_status -eq "N") {
 
-                            Write-Verbose "Skipped" $dir
+                            Write-Warning "Skipped" $dir
                             Set-Location ..
 
                         }
@@ -178,10 +178,10 @@ function Update-Repositories {
                         git pull -q
                         if (!($currentGitBranch -eq $GitMainBranch[1])){
                             git checkout $currentGitBranch -q
-                            Write-Verbose "pulled newest" $GitMainBranch[1] "from" $dir", going back to" $currentGitBranch
+                            Write-Warning "pulled newest" $GitMainBranch[1] "from" $dir", going back to" $currentGitBranch
                         }
 
-                        Write-Verbose "pulled newest" $GitMainBranch[1] "from" $dir
+                        Write-Warning "pulled newest" $GitMainBranch[1] "from" $dir
                         Set-Location ..
 
                     } else {
