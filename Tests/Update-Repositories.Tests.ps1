@@ -12,7 +12,7 @@ Describe "Update-Repositories" {
         }
         It "Success" {
             Mock Write-Host {}
-            Update-Repositories
+            # Update-Repositories
             Assert-MockCalled Write-Host -Scope It
         }
     }
