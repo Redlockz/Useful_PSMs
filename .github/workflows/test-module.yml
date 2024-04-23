@@ -6,7 +6,6 @@ name: CI PSScriptAnalyzer
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -34,12 +33,13 @@ jobs:
           $config = New-PesterConfiguration
           $config.Run.Path = ".\Tests"
           $config.CodeCoverage.Enabled = $true
+          $config.CodeCoverage.Path = ".\Update-Repositories"
           Invoke-Pester -Configuration $config
 
       - name: Publish results
         uses: actions/upload-artifact@v4
         with:
-          name: Coverage.zip
+          name: Coverage
           path: '*.xml'
           overwrite: true
 
