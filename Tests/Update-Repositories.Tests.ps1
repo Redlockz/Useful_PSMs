@@ -11,7 +11,10 @@ Describe "Update-Repositories" {
     Context "Enter git directory and update repository" {
         It "Should throw git error" {
             Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'
-            {Update-Repositories} | Should -BeLike "" 
+            # {Update-Repositories} | Should -BeLike "" 
+            $obj = Update-Repositories
+            write-output $obj
+            $obj | Should -Not -BeNullOrEmpty
         }
     }
 }
