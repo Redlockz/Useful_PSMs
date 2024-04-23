@@ -3,14 +3,14 @@ BeforeAll {
 }
 
 Describe "Update-Repositories" {
-    Context "Read-Host" {
+    Context "location not found" {
         It "Should throw" {
             {Update-Repositories} | Should -Throw "*location not found*"
         }
     }
     Context "Enter git directory and update repository" {
-        Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs\'
         It "Should invoke Read-Host" {
+            Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs\'
             $result = Update-Repositories
             Should -BeLike "*Your branch is up to date*"
         }
