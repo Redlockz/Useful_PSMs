@@ -18,10 +18,10 @@ Describe "Update-Repositories passing" {
             Mock -ModuleName Update-Repositories Update-Repositories {}
         }
         It "Success" {
-            Assert-MockCalled Write-Host -Exactly 3 -Scope Context
-            Assert-MockCalled Write-Host -Exactly 1 -Scope Context -ParameterFilter { $Object -eq "testing location" }
-            Assert-MockCalled Write-Host -Exactly 1 -Scope Context -ParameterFilter { $Object -eq "Updated all repositories" }
-            Assert-MockCalled Write-Host -Exactly 1 -Scope Context -ParameterFilter { $Object -eq "Updated all Updated git workspace" }
+            Assert-MockCalled -CommandName Write-Host -ModuleName Update-Repositories -Exactly 3 -Scope Context
+            Assert-MockCalled -CommandName Write-Host -ModuleName Update-Repositories -Exactly 1 -Scope Context -ParameterFilter { $Object -eq "testing location" }
+            Assert-MockCalled -CommandName Write-Host -ModuleName Update-Repositories -Exactly 1 -Scope Context -ParameterFilter { $Object -eq "Updated all repositories" }
+            Assert-MockCalled -CommandName Write-Host -ModuleName Update-Repositories -Exactly 1 -Scope Context -ParameterFilter { $Object -eq "Updated all Updated git workspace" }
         }
     }
 }
