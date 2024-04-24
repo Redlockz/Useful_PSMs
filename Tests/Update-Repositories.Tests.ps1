@@ -19,7 +19,7 @@ Describe "Update-Repositories passing" {
             Mock Write-Host -ModuleName Update-Repositories { return 'Updated git workspace' }
         }
         It "Success" {
-            Should -Be 'Updated git workspace'
+            {Update-Repositories} | Should -Be 'Updated git workspace'
         }
     }
 }
