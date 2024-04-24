@@ -10,18 +10,16 @@ Describe "Update-Repositories failing" {
     }
 }
 
-InModuleScope {
-    Describe "Update-Repositories passing" {
-        Context "Update-Repositories passing" {
-            BeforeAll {
-                Write-Verbose "Creating test file"
-                {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
-            }
-            It "Success" {
-                Mock Update-Repositories { }
-                Update-Repositories
-                Should -Invoke Write-Host
-            }
+
+Describe "Update-Repositories passing" {
+    Context "Update-Repositories passing" {
+        BeforeAll {
+            Write-Verbose "Creating test file"
+            {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
+            Mock Write-Host -ModuleName Update-Repositories { return 'Updated git workspace' }
+        }
+        It "Success" {
+            Should -Be 'Updated git workspace'
         }
     }
 }
