@@ -16,7 +16,7 @@ Describe "Update-Repositories passing" {
             Write-Verbose "Creating test file"
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
         }
-        It "Success" 
+        It "Success" {
             Mock Update-Repositories { }
             Update-Repositories
             Should -Invoke Write-Host -Times 3 -Exactly
