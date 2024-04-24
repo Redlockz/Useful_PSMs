@@ -15,11 +15,11 @@ Describe "Update-Repositories passing" {
         BeforeAll {
             Write-Verbose "Creating test file"
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
-            Mock Write-Host { }
         }
-        It "Success" {
+        It "Success" 
+            Mock Update-Repositories { }
             Update-Repositories
-            Assert-MockCalled 'Write-Host' -Exactly 3
+            Should -Invoke Write-Host -Times 3 -Exactly
             # Assert-MockCalled Write-Host -Exactly 1 -Scope Context -ParameterFilter { $Object -eq "testing location" }
             # Assert-MockCalled Write-Host -Exactly 1 -Scope Context -ParameterFilter { $Object -eq "Updated all repositories" }
             # Assert-MockCalled Write-Host -Exactly 1 -Scope Context -ParameterFilter { $Object -eq "Updated all Updated git workspace" }
