@@ -10,16 +10,18 @@ Describe "Update-Repositories failing" {
     }
 }
 
-Describe "Update-Repositories passing" {
-    Context "Update-Repositories passing" {
-        BeforeAll {
-            Write-Verbose "Creating test file"
-            {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
-        }
-        It "Success" {
-            Mock Update-Repositories { }
-            Update-Repositories
-            Should -Invoke Write-Host
+InModuleScope {
+    Describe "Update-Repositories passing" {
+        Context "Update-Repositories passing" {
+            BeforeAll {
+                Write-Verbose "Creating test file"
+                {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
+            }
+            It "Success" {
+                Mock Update-Repositories { }
+                Update-Repositories
+                Should -Invoke Write-Host
+            }
         }
     }
 }
