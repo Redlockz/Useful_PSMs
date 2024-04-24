@@ -15,9 +15,10 @@ Describe "Update-Repositories passing" {
         BeforeAll {
             Write-Verbose "Creating test file"
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
-            Mock -ModuleName Update-Repositories Update-Repositories { Write-Host }
+            Mock Write-Host { }
         }
         It "Success" {
+            Update-Repositories
             Assert-MockCalled -CommandName Write-Host -ModuleName Update-Repositories -Exactly 3 -Scope Context
             Assert-MockCalled -CommandName Write-Host -ModuleName Update-Repositories -Exactly 1 -Scope Context -ParameterFilter { $Object -eq "testing location" }
             Assert-MockCalled -CommandName Write-Host -ModuleName Update-Repositories -Exactly 1 -Scope Context -ParameterFilter { $Object -eq "Updated all repositories" }
