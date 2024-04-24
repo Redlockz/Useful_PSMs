@@ -12,12 +12,13 @@ Describe "Update-Repositories failing" {
 
 Describe "Update-Repositories passing" {
     Context "Update-Repositories passing" {
-        It "Create Test File" {
+        BeforeAll {
+            Write-Verbose "Creating test file"
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
+            Mock -ModuleName Update-Repositories Update-Repositories {}
         }
         It "Success" {
-            Mock -ModuleName Update-Repositories Update-Repositories {}
-            # Assert-MockCalled Write-Host -Exactly 3 -Scope It
+            Assert-MockCalled Write-Host -Exactly 3 -Scope It
             Assert-MockCalled Write-Host -Exactly 1 -Scope It -ParameterFilter { $Object -eq "testing location" }
             Assert-MockCalled Write-Host -Exactly 1 -Scope It -ParameterFilter { $Object -eq "Updated all repositories" }
             Assert-MockCalled Write-Host -Exactly 1 -Scope It -ParameterFilter { $Object -eq "Updated all Updated git workspace" }
