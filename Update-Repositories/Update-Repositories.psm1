@@ -208,6 +208,6 @@ function Update-Repositories {
     }
     Write-Host "Updated all repositories"
     Write-Host "Updated git workspace"
-    
+
     # exit 0
     }
