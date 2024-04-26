@@ -12,10 +12,9 @@ Describe "Update-Repositories failing" {
         It "Succeeds" {
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
             Mock Test-Path { return $true }
-            Mock Get-Content { return 'C:\Users\deerj00\.ado_gitfolder.txt' }
-            Mock Set-Location { 'C:\Users\deerj00\Projecten\Useful_PSMs' }
+            Mock Get-Content { return '$HOME\.ado_gitfolder.txt' }
+            Mock Set-Location { 'D:\a\Useful_PSMs\Useful_PSMs' }
             {Update-Repositories} | Should -Not -Throw
-
         }
     }
 }
