@@ -17,8 +17,8 @@ Describe "Update-Repositories failing" {
         }
         It "Succeeds, but not a git folder" {
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
-            Remove-Item -Path D:\a\Useful_PSMs\Useful_PSMs\.github -Force
-            Remove-Item -Path D:\a\Useful_PSMs\Useful_PSMs\.gitignore -Force
+            Remove-Item -Path "D:\a\Useful_PSMs\Useful_PSMs\.github" -Force
+            Remove-Item -Path "D:\a\Useful_PSMs\Useful_PSMs\.gitignore" -Force
             Mock Test-Path { return $true }
             Mock Get-Content { return '$HOME\.ado_gitfolder.txt' }
             Mock Set-Location { 'D:\a\Useful_PSMs\Useful_PSMs' }
