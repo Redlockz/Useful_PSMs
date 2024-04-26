@@ -2,7 +2,7 @@ Describe "Update-Repositories failing" {
 
     BeforeAll {
         Import-Module -Name D:\a\Useful_PSMs\Useful_PSMs\Update-Repositories\Update-Repositories.psm1 -Verbose -Force
-        Update-Repositories
+        {Update-Repositories}
     }
 
     Context "Update-Repositories failing" {
