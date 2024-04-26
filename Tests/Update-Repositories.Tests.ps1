@@ -7,11 +7,13 @@ Describe "Update-Repositories failing" {
 
     Context "Update-Repositories failing" {
         It "Should throw" {
-            {Update-Repositories} | Should -Throw "*location not found*"
+            Should -Throw "*location not found*"
         }
-
+    }
+    
+    Context "Update-Repositories succeeding" {
         It "Success" {
-            {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
+            Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'
             Mock Write-Host
             Should -Invoke Write-Host -Exactly 3
         }
