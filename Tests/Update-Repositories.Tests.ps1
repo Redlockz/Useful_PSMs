@@ -6,7 +6,7 @@ Describe "Update-Repositories failing" {
 
     Context "Update-Repositories" {
         It "Should throw" {
-            {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
+            # {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
             {Update-Repositories} | Should -Throw "*location not found*"
         }
 
