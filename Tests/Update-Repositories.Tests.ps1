@@ -11,7 +11,7 @@ Describe "Update-Repositories failing" {
 
         It "Success" {
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
-            Mock Write-Host
+            Mock Update-Repositories
             Update-Repositories
             Should -Invoke Write-Host -Exactly 3
         }
