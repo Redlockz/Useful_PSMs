@@ -25,20 +25,9 @@ jobs:
       - name: Initialize environment
         uses: PSModule/Initialize-PSModule@main
 
-      # - name: Test-PSModule
-      #   run: pwsh -NoProfile -NoLogo -Command "Invoke-ScriptAnalyzer -ExcludeRule PSAvoidUsingWriteHost,PSAvoidUsingPositionalParameters,PSUseSingularNouns,PSUseShouldProcessForStateChangingFunctions -EnableExit -Path Update-Repositories\Update-Repositories.psm1"
+      - name: Test-PSModule
+        run: pwsh -NoProfile -NoLogo -Command "Invoke-ScriptAnalyzer -ExcludeRule PSAvoidUsingWriteHost,PSAvoidUsingPositionalParameters,PSUseSingularNouns,PSUseShouldProcessForStateChangingFunctions -EnableExit -Path Update-Repositories\Update-Repositories.psm1"
 
-      # - name: Test Workflow
-      #   shell: pwsh
-      #   run: |
-      #     $VerbosePreference = "Continue"
-      #     Import-Module -Name D:\a\Useful_PSMs\Useful_PSMs\Update-Repositories\Update-Repositories.psm1 -Verbose -Force
-      #     Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'
-      #     $VerbosePreference = "Continue"
-      #     $output = Update-Repositories -Verbose
-      #     $output
-      #     Write-Verbose $output
-          
       - name: Pester-Test
         shell: pwsh
         run: |

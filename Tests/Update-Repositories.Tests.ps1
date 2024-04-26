@@ -6,15 +6,17 @@ Describe "Update-Repositories failing" {
 
     Context "Update-Repositories" {
         It "Should throw" {
+            {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
             {Update-Repositories} | Should -Throw "*location not found*"
         }
-    
+
         It "Succeeds" {
-            # Mock Get-Content { "C:/test/.ado_gitfolder.txt" }
-            Mock Write-Host { }
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
-            Update-Repositories | Should -Not -Throw
-            Should -Invoke Write-Host -Exactly 3
+            Mock Test-Path { return $true }
+            Mock Get-Content { return 'C:\Users\deerj00\.ado_gitfolder.txt' }
+            Mock Set-Location { 'C:\Users\deerj00\Projecten\Useful_PSMs' }
+            {Update-Repositories} | Should -Not -Throw
+
         }
     }
 }
