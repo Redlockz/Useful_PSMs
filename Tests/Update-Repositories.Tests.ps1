@@ -9,6 +9,7 @@ Describe "Update-Repositories failing" {
             {Update-Repositories} | Should -Throw "*location not found*"
         }
         It "Succeeds" {
+            {Set-Content -Path 'D:\a\Useful_PSMs\Useful_PSMs\.git' -Value 'Test'}
             {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a\Useful_PSMs\Useful_PSMs'} | Should -Not -Throw
             Mock Test-Path { return $true }
             Mock Get-Content { return '$HOME\.ado_gitfolder.txt' }
