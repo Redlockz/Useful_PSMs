@@ -16,7 +16,7 @@ Describe "Update-Repositories failing" {
             {Update-Repositories} | Should -Not -Throw
         }
         It "Succeeds, but not a git folder" {
-            {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\b'} | Should -Not -Throw
+            {Set-Content -Path "$HOME\.ado_gitfolder.txt" -Value 'D:\a'} | Should -Not -Throw
             Mock Test-Path { return $true }
             Mock Get-Content { return '$HOME\.ado_gitfolder.txt' }
             Mock Set-Location { 'D:\b' }
