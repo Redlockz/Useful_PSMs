@@ -21,6 +21,7 @@ Describe "Update-Repositories failing" {
             Mock Get-Content { return '$HOME\.ado_gitfolder.txt' }
             Mock Set-Location { 'D:\b' }
             {Update-Repositories} | Should -Not -Throw
+            {Set-Location D:\a\Useful_PSMs\Useful_PSMs\Update-Repositories\}
         }
     }
 }
