@@ -34,7 +34,7 @@ jobs:
           $config = New-PesterConfiguration
           $config.Run.Path = ".\Tests"
           $config.CodeCoverage.Enabled = $true
-          $config.CodeCoverage.Path = ".\Update-Repositories"
+          $config.CodeCoverage.Path = "D:\a\Useful_PSMs\Useful_PSMs\Update-Repositories"
           $config.Output.Verbosity = "Diagnostic"
           $config.Output.StackTraceVerbosity = "Full"
           Invoke-Pester -Configuration $config -Verbose
